@@ -5,7 +5,7 @@ def failure_detection_agent(verification_result: dict):
     if verification_result.get("status") == "failed":
         failure_info = {
             "failure_detected": True,
-            "failure_type": "missing_data",
+            "failure_type": verification_result.get("issue_type", "missing_data"),
             "details": verification_result
         }
 
