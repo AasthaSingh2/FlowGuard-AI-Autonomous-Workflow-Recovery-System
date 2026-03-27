@@ -1,21 +1,18 @@
 import os
 
-import fitz
+from pypdf import PdfReader
 
 from agents.audit_agent import log_event
 
 
 def _extract_pdf_text(file_path: str) -> str:
-    document = fitz.open(file_path)
-    try:
-        pages = []
-        for page in document:
-            # Keep the page text in its raw line-oriented form so blank
-            # same-line values stay blank instead of absorbing the next field.
-            pages.append(page.get_text("text") or "")
-        return "\n".join(pages)
-    finally:
-        document.close()
+    reader = PdfReader(file_path)
+    pages = []
+    for page in reader.pages:
+        # Keep the page text in its raw line-oriented form so blank
+        # same-line values stay blank instead of absorbing the next field.
+        pages.append(page.extract_text() or "")
+    return "\n".join(pages)
 
 
 def _extract_text(file_path: str) -> str:
