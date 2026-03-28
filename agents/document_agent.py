@@ -1,18 +1,32 @@
 import os
 
-from pypdf import PdfReader
-
 from agents.audit_agent import log_event
 
 
 def _extract_pdf_text(file_path: str) -> str:
-    reader = PdfReader(file_path)
-    pages = []
-    for page in reader.pages:
-        # Keep the page text in its raw line-oriented form so blank
-        # same-line values stay blank instead of absorbing the next field.
-        pages.append(page.extract_text() or "")
-    return "\n".join(pages)
+    try:
+        import fitz
+
+        pages = []
+        with fitz.open(file_path) as document:
+            for page in document:
+                # Keep the page text in a raw line-oriented form so blank
+                # same-line values stay blank instead of absorbing the next field.
+                pages.append(page.get_text("text") or "")
+        return "\n".join(pages)
+    except ImportError:
+        try:
+            from pypdf import PdfReader
+        except ImportError as exc:
+            raise RuntimeError(
+                "PDF extraction requires either pymupdf or pypdf to be installed."
+            ) from exc
+
+        reader = PdfReader(file_path)
+        pages = []
+        for page in reader.pages:
+            pages.append(page.extract_text() or "")
+        return "\n".join(pages)
 
 
 def _extract_text(file_path: str) -> str:

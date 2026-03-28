@@ -1,43 +1,39 @@
 {
-  "uploaded_file": "missing_email.pdf",
+  "uploaded_file": "identity_mismatch.pdf",
   "extracted_data": {
     "candidate_name": "Aastha Singh",
-    "email": "",
-    "employee_id": "EMP-1023",
+    "email": "rahul123@gmail.com",
+    "employee_id": "EMP-2024",
     "documents_uploaded": [
-      "missing_email.pdf"
+      "identity_mismatch.pdf"
     ],
     "document_status": "parsed"
   },
   "initial_verification": {
     "status": "failed",
     "reason": "Validation failed",
-    "issue_type": "missing_email",
-    "missing_fields": [
-      "email"
-    ],
-    "details": "email is missing or empty."
+    "issue_type": "identity_mismatch",
+    "missing_fields": [],
+    "details": "candidate_name does not match the email prefix."
   },
   "failure_result": {
     "failure_detected": true,
-    "failure_type": "missing_email",
+    "failure_type": "identity_mismatch",
     "details": {
       "status": "failed",
       "reason": "Validation failed",
-      "issue_type": "missing_email",
-      "missing_fields": [
-        "email"
-      ],
-      "details": "email is missing or empty."
+      "issue_type": "identity_mismatch",
+      "missing_fields": [],
+      "details": "candidate_name does not match the email prefix."
     }
   },
   "governance_result": {
-    "issue_type": "missing_email",
-    "severity": "medium",
-    "confidence": 0.81,
+    "issue_type": "identity_mismatch",
+    "severity": "high",
+    "confidence": 0.97,
     "policy_decision": "escalate",
     "escalation_required": true,
-    "escalation_reason": "Email is mandatory and cannot be safely auto-generated."
+    "escalation_reason": "Identity mismatch requires human review due to data integrity risk."
   },
   "recovery_result": {
     "recovered": false,
@@ -46,21 +42,19 @@
   },
   "final_data": {
     "candidate_name": "Aastha Singh",
-    "email": "",
-    "employee_id": "EMP-1023",
+    "email": "rahul123@gmail.com",
+    "employee_id": "EMP-2024",
     "documents_uploaded": [
-      "missing_email.pdf"
+      "identity_mismatch.pdf"
     ],
     "document_status": "parsed"
   },
   "final_verification": {
     "status": "failed",
     "reason": "Validation failed",
-    "issue_type": "missing_email",
-    "missing_fields": [
-      "email"
-    ],
-    "details": "email is missing or empty."
+    "issue_type": "identity_mismatch",
+    "missing_fields": [],
+    "details": "candidate_name does not match the email prefix."
   },
   "workflow_result": {
     "status": "escalated",
@@ -69,7 +63,7 @@
   },
   "audit_summary": {
     "workflow_status": "escalated",
-    "risk_level": "medium",
+    "risk_level": "high",
     "verification_status": "failed",
     "recovery_status": "not_applied",
     "escalation_required": true,
@@ -77,7 +71,226 @@
   },
   "audit_logs": [
     {
-      "timestamp": "2026-03-25T09:49:04.266396",
+      "timestamp": "2026-03-28T01:34:46.766801",
+      "agent": "Document Agent",
+      "step": "document_extraction",
+      "status": "success",
+      "message": "Document parsed successfully",
+      "data": {
+        "candidate_name": "Aastha Singh",
+        "email": "aastha@example.com",
+        "employee_id": "12345",
+        "documents_uploaded": [
+          "invalid_id.pdf"
+        ],
+        "document_status": "parsed",
+        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: 12345\nDocument Status: Parsed\n"
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:46.772835",
+      "agent": "Verification Agent",
+      "step": "verification",
+      "status": "failed",
+      "message": "Verification failed due to workflow validation issues",
+      "data": {
+        "status": "failed",
+        "reason": "Validation failed",
+        "issue_type": "invalid_employee_id",
+        "missing_fields": [],
+        "details": "employee_id must start with EMP- or FG-AUTO-."
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:46.799491",
+      "agent": "Failure Detection Agent",
+      "step": "failure_detection",
+      "status": "failed",
+      "message": "Workflow failure detected",
+      "data": {
+        "failure_detected": true,
+        "failure_type": "invalid_employee_id",
+        "details": {
+          "status": "failed",
+          "reason": "Validation failed",
+          "issue_type": "invalid_employee_id",
+          "missing_fields": [],
+          "details": "employee_id must start with EMP- or FG-AUTO-."
+        }
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:46.826112",
+      "agent": "Governance Agent",
+      "step": "governance_decision",
+      "status": "success",
+      "message": "Governance policy evaluated: auto_recover",
+      "data": {
+        "issue_type": "invalid_employee_id",
+        "severity": "low",
+        "confidence": 0.88,
+        "policy_decision": "auto_recover",
+        "escalation_required": false,
+        "escalation_reason": "Invalid employee_id format can be corrected using fallback generation."
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:46.857576",
+      "agent": "Recovery Agent",
+      "step": "recovery",
+      "status": "success",
+      "message": "Recovery action executed successfully",
+      "data": {
+        "recovered": true,
+        "recovery_action": "Replaced invalid employee ID with a valid generated ID",
+        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: invalid_employee_id. Recovery action taken: Replaced invalid employee ID with a valid generated ID.",
+        "updated_data": {
+          "candidate_name": "Aastha Singh",
+          "email": "aastha@example.com",
+          "employee_id": "FG-AUTO-1002",
+          "documents_uploaded": [
+            "invalid_id.pdf"
+          ],
+          "document_status": "parsed"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:46.883811",
+      "agent": "Verification Agent",
+      "step": "verification",
+      "status": "success",
+      "message": "Verification completed successfully",
+      "data": {
+        "status": "success",
+        "message": "Verification passed"
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:46.918000",
+      "agent": "Task Agent",
+      "step": "workflow_completion",
+      "status": "success",
+      "message": "Workflow completed successfully",
+      "data": {
+        "status": "completed",
+        "message": "Employee onboarding workflow completed successfully",
+        "final_employee_id": "FG-AUTO-1002",
+        "candidate_name": "Aastha Singh"
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.019516",
+      "agent": "Document Agent",
+      "step": "document_extraction",
+      "status": "success",
+      "message": "Document parsed successfully",
+      "data": {
+        "candidate_name": "Aastha Singh",
+        "email": "aastha@example.com",
+        "employee_id": "EMP-1001",
+        "documents_uploaded": [
+          "duplicate_id.pdf"
+        ],
+        "document_status": "parsed",
+        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.025196",
+      "agent": "Verification Agent",
+      "step": "verification",
+      "status": "failed",
+      "message": "Verification failed due to workflow validation issues",
+      "data": {
+        "status": "failed",
+        "reason": "Validation failed",
+        "issue_type": "duplicate_employee_id",
+        "missing_fields": [],
+        "details": "employee_id already exists in the simulated employee registry."
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.061638",
+      "agent": "Failure Detection Agent",
+      "step": "failure_detection",
+      "status": "failed",
+      "message": "Workflow failure detected",
+      "data": {
+        "failure_detected": true,
+        "failure_type": "duplicate_employee_id",
+        "details": {
+          "status": "failed",
+          "reason": "Validation failed",
+          "issue_type": "duplicate_employee_id",
+          "missing_fields": [],
+          "details": "employee_id already exists in the simulated employee registry."
+        }
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.092224",
+      "agent": "Governance Agent",
+      "step": "governance_decision",
+      "status": "success",
+      "message": "Governance policy evaluated: recover_with_warning",
+      "data": {
+        "issue_type": "duplicate_employee_id",
+        "severity": "medium",
+        "confidence": 0.85,
+        "policy_decision": "recover_with_warning",
+        "escalation_required": false,
+        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.128022",
+      "agent": "Recovery Agent",
+      "step": "recovery",
+      "status": "success",
+      "message": "Recovery action executed successfully",
+      "data": {
+        "recovered": true,
+        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
+        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
+        "warning": "Duplicate employee_id replaced with a new generated identifier.",
+        "updated_data": {
+          "candidate_name": "Aastha Singh",
+          "email": "aastha@example.com",
+          "employee_id": "FG-AUTO-1003",
+          "documents_uploaded": [
+            "duplicate_id.pdf"
+          ],
+          "document_status": "parsed"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.156653",
+      "agent": "Verification Agent",
+      "step": "verification",
+      "status": "success",
+      "message": "Verification completed successfully",
+      "data": {
+        "status": "success",
+        "message": "Verification passed"
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.184196",
+      "agent": "Task Agent",
+      "step": "workflow_completion",
+      "status": "success",
+      "message": "Workflow completed successfully",
+      "data": {
+        "status": "completed",
+        "message": "Employee onboarding workflow completed successfully",
+        "final_employee_id": "FG-AUTO-1003",
+        "candidate_name": "Aastha Singh"
+      }
+    },
+    {
+      "timestamp": "2026-03-28T01:34:47.256305",
       "agent": "Document Agent",
       "step": "document_extraction",
       "status": "success",
@@ -94,7 +307,7 @@
       }
     },
     {
-      "timestamp": "2026-03-25T09:49:04.283867",
+      "timestamp": "2026-03-28T01:34:47.261239",
       "agent": "Verification Agent",
       "step": "verification",
       "status": "failed",
@@ -110,7 +323,7 @@
       }
     },
     {
-      "timestamp": "2026-03-25T09:49:04.345242",
+      "timestamp": "2026-03-28T01:34:47.291786",
       "agent": "Failure Detection Agent",
       "step": "failure_detection",
       "status": "failed",
@@ -130,7 +343,7 @@
       }
     },
     {
-      "timestamp": "2026-03-25T09:49:04.390452",
+      "timestamp": "2026-03-28T01:34:47.322014",
       "agent": "Governance Agent",
       "step": "governance_decision",
       "status": "success",
@@ -145,1467 +358,7 @@
       }
     },
     {
-      "timestamp": "2026-03-25T09:49:04.433507",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "pending_review",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:05.925613",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "12345",
-        "documents_uploaded": [
-          "invalid_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: 12345\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:05.937593",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "invalid_employee_id",
-        "missing_fields": [],
-        "details": "employee_id must start with EMP- or FG-AUTO-."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:06.013010",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "invalid_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "invalid_employee_id",
-          "missing_fields": [],
-          "details": "employee_id must start with EMP- or FG-AUTO-."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:06.052752",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: auto_recover",
-      "data": {
-        "issue_type": "invalid_employee_id",
-        "severity": "low",
-        "confidence": 0.88,
-        "policy_decision": "auto_recover",
-        "escalation_required": false,
-        "escalation_reason": "Invalid employee_id format can be corrected using fallback generation."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:06.087809",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced invalid employee ID with a valid generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: invalid_employee_id. Recovery action taken: Replaced invalid employee ID with a valid generated ID.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1002",
-          "documents_uploaded": [
-            "invalid_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:06.123752",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:06.155908",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1002",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:43.079572",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "rahul123@gmail.com",
-        "employee_id": "EMP-2024",
-        "documents_uploaded": [
-          "identity_mismatch.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: rahul123@gmail.com\nEmployee ID: EMP-2024\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:43.086947",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "identity_mismatch",
-        "missing_fields": [],
-        "details": "candidate_name does not match the email prefix."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:43.167883",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "identity_mismatch",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "identity_mismatch",
-          "missing_fields": [],
-          "details": "candidate_name does not match the email prefix."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:43.199108",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "identity_mismatch",
-        "severity": "high",
-        "confidence": 0.97,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Identity mismatch requires human review due to data integrity risk."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:07:43.226750",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "pending_review",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.108710",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.115528",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.164451",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.210301",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.245588",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.287045",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:18:00.325554",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.151012",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "12345",
-        "documents_uploaded": [
-          "invalid_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: 12345\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.161931",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "invalid_employee_id",
-        "missing_fields": [],
-        "details": "employee_id must start with EMP- or FG-AUTO-."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.239336",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "invalid_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "invalid_employee_id",
-          "missing_fields": [],
-          "details": "employee_id must start with EMP- or FG-AUTO-."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.294448",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: auto_recover",
-      "data": {
-        "issue_type": "invalid_employee_id",
-        "severity": "low",
-        "confidence": 0.88,
-        "policy_decision": "auto_recover",
-        "escalation_required": false,
-        "escalation_reason": "Invalid employee_id format can be corrected using fallback generation."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.334398",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced invalid employee ID with a valid generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: invalid_employee_id. Recovery action taken: Replaced invalid employee ID with a valid generated ID.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1002",
-          "documents_uploaded": [
-            "invalid_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.380628",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:17.421917",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1002",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:38.395179",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "rahul123@gmail.com",
-        "employee_id": "EMP-2024",
-        "documents_uploaded": [
-          "identity_mismatch.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: rahul123@gmail.com\nEmployee ID: EMP-2024\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:38.403801",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "identity_mismatch",
-        "missing_fields": [],
-        "details": "candidate_name does not match the email prefix."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:38.466576",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "identity_mismatch",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "identity_mismatch",
-          "missing_fields": [],
-          "details": "candidate_name does not match the email prefix."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:38.511048",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "identity_mismatch",
-        "severity": "high",
-        "confidence": 0.97,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Identity mismatch requires human review due to data integrity risk."
-      }
-    },
-    {
-      "timestamp": "2026-03-25T14:19:38.552157",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "pending_review",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T00:56:42.115632",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "rahul123@gmail.com",
-        "employee_id": "EMP-2024",
-        "documents_uploaded": [
-          "identity_mismatch.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: rahul123@gmail.com\nEmployee ID: EMP-2024\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T00:56:42.138978",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "identity_mismatch",
-        "missing_fields": [],
-        "details": "candidate_name does not match the email prefix."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T00:56:42.165123",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "identity_mismatch",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "identity_mismatch",
-          "missing_fields": [],
-          "details": "candidate_name does not match the email prefix."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T00:56:42.195321",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "identity_mismatch",
-        "severity": "high",
-        "confidence": 0.97,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Identity mismatch requires human review due to data integrity risk."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T00:56:42.216757",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "pending_review",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:28.907271",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:28.912663",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:28.948754",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:28.973659",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:29.000339",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:29.031260",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:29.046189",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.763748",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.769344",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.809471",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.839036",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.859123",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.877868",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:01:43.897122",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:02:23.692203",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "rahul123@gmail.com",
-        "employee_id": "EMP-2024",
-        "documents_uploaded": [
-          "identity_mismatch.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: rahul123@gmail.com\nEmployee ID: EMP-2024\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:02:23.703757",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "identity_mismatch",
-        "missing_fields": [],
-        "details": "candidate_name does not match the email prefix."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:02:23.728635",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "identity_mismatch",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "identity_mismatch",
-          "missing_fields": [],
-          "details": "candidate_name does not match the email prefix."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:02:23.759066",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "identity_mismatch",
-        "severity": "high",
-        "confidence": 0.97,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Identity mismatch requires human review due to data integrity risk."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:02:23.792943",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "pending_review",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.402351",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.415105",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.484440",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.540247",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.571533",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.596214",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:11:11.628975",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.812150",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "12345",
-        "documents_uploaded": [
-          "invalid_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: 12345\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.822458",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "invalid_employee_id",
-        "missing_fields": [],
-        "details": "employee_id must start with EMP- or FG-AUTO-."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.856958",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "invalid_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "invalid_employee_id",
-          "missing_fields": [],
-          "details": "employee_id must start with EMP- or FG-AUTO-."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.882607",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: auto_recover",
-      "data": {
-        "issue_type": "invalid_employee_id",
-        "severity": "low",
-        "confidence": 0.88,
-        "policy_decision": "auto_recover",
-        "escalation_required": false,
-        "escalation_reason": "Invalid employee_id format can be corrected using fallback generation."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.906609",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced invalid employee ID with a valid generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: invalid_employee_id. Recovery action taken: Replaced invalid employee ID with a valid generated ID.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1002",
-          "documents_uploaded": [
-            "invalid_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.936920",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:09.965539",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1002",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:32.083454",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "",
-        "employee_id": "EMP-1023",
-        "documents_uploaded": [
-          "missing_email.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail:\nEmployee ID: EMP-1023\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:32.091685",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "missing_email",
-        "missing_fields": [
-          "email"
-        ],
-        "details": "email is missing or empty."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:32.131197",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "missing_email",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "missing_email",
-          "missing_fields": [
-            "email"
-          ],
-          "details": "email is missing or empty."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:32.175359",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "missing_email",
-        "severity": "medium",
-        "confidence": 0.81,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Email is mandatory and cannot be safely auto-generated."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:12:32.203184",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "pending_review",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:11.856691",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "",
-        "email": "",
-        "employee_id": "",
-        "documents_uploaded": [
-          "FlowGuard_Sample_Cases.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Identity Mismatch\nVerification: Failed\nRisk: High\nDecision: Escalate\nRecovery: Not Applied\nEscalation: Required\nWorkflow: Escalated\nDuplicate ID\nVerification: Failed\nRisk: Medium\nDecision: Recover\nRecovery: Recovered\nEscalation: Not Required\nWorkflow: Completed\nMissing Email\nVerification: Failed\nRisk: Low\nDecision: Recover\nRecovery: Recovered\nEscalation: Not Required\nWorkflow: Completed\nMissing Employee ID\nVerification: Failed\nRisk: Medium\nDecision: Recover\nRecovery: Recovered\nEscalation: Not Required\nWorkflow: Completed\nInvalid Format\nVerification: Failed\nRisk: Medium\nDecision: Recover\nRecovery: Recovered\nEscalation: Not Required\nWorkflow: Completed\n\nSuspicious Document\nVerification: Failed\nRisk: High\nDecision: Escalate\nRecovery: Not Applied\nEscalation: Required\nWorkflow: Escalated\nNo Issue\nVerification: Success\nRisk: Low\nDecision: Approve\nRecovery: Not Needed\nEscalation: Not Required\nWorkflow: Completed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:11.868659",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "missing_employee_id",
-        "missing_fields": [
-          "candidate_name",
-          "email",
-          "employee_id"
-        ],
-        "details": "employee_id is missing or empty."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:11.896653",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "missing_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "missing_employee_id",
-          "missing_fields": [
-            "candidate_name",
-            "email",
-            "employee_id"
-          ],
-          "details": "employee_id is missing or empty."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:11.928955",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: auto_recover",
-      "data": {
-        "issue_type": "missing_employee_id",
-        "severity": "low",
-        "confidence": 0.92,
-        "policy_decision": "auto_recover",
-        "escalation_required": false,
-        "escalation_reason": "Missing employee_id is covered by a deterministic fallback policy."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:11.958912",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Auto-generated missing employee ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: missing_employee_id. Recovery action taken: Auto-generated missing employee ID.",
-        "updated_data": {
-          "candidate_name": "",
-          "email": "",
-          "employee_id": "FG-AUTO-1001",
-          "documents_uploaded": [
-            "FlowGuard_Sample_Cases.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:11.989045",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "missing_email",
-        "missing_fields": [
-          "candidate_name",
-          "email"
-        ],
-        "details": "email is missing or empty."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:12.023435",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1001",
-        "candidate_name": ""
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.128785",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.137423",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.191661",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.212780",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.253684",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.312364",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:22:34.355904",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:56:56.764572",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "rahul123@gmail.com",
-        "employee_id": "EMP-2024",
-        "documents_uploaded": [
-          "identity_mismatch.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: rahul123@gmail.com\nEmployee ID: EMP-2024\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:56:56.792933",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "identity_mismatch",
-        "missing_fields": [],
-        "details": "candidate_name does not match the email prefix."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:56:56.888882",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "identity_mismatch",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "identity_mismatch",
-          "missing_fields": [],
-          "details": "candidate_name does not match the email prefix."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:56:56.958533",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "identity_mismatch",
-        "severity": "high",
-        "confidence": 0.97,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Identity mismatch requires human review due to data integrity risk."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T01:56:57.044080",
+      "timestamp": "2026-03-28T01:34:47.348702",
       "agent": "Task Agent",
       "step": "workflow_completion",
       "status": "decision",
@@ -1617,117 +370,7 @@
       }
     },
     {
-      "timestamp": "2026-03-27T02:04:42.419149",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:04:42.440864",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:04:42.525703",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:04:42.586624",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:04:42.653113",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:04:42.712659",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:04:42.786248",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:26.588971",
+      "timestamp": "2026-03-28T01:34:47.434245",
       "agent": "Document Agent",
       "step": "document_extraction",
       "status": "success",
@@ -1744,7 +387,7 @@
       }
     },
     {
-      "timestamp": "2026-03-27T02:05:26.605457",
+      "timestamp": "2026-03-28T01:34:47.439264",
       "agent": "Verification Agent",
       "step": "verification",
       "status": "failed",
@@ -1758,7 +401,7 @@
       }
     },
     {
-      "timestamp": "2026-03-27T02:05:26.661973",
+      "timestamp": "2026-03-28T01:34:47.478098",
       "agent": "Failure Detection Agent",
       "step": "failure_detection",
       "status": "failed",
@@ -1776,7 +419,7 @@
       }
     },
     {
-      "timestamp": "2026-03-27T02:05:26.703500",
+      "timestamp": "2026-03-28T01:34:47.512022",
       "agent": "Governance Agent",
       "step": "governance_decision",
       "status": "success",
@@ -1791,306 +434,7 @@
       }
     },
     {
-      "timestamp": "2026-03-27T02:05:26.776168",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "decision",
-      "message": "Workflow escalated for manual review",
-      "data": {
-        "status": "escalated",
-        "message": "Workflow escalated for manual review",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:37.974987",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "12345",
-        "documents_uploaded": [
-          "invalid_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: 12345\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:37.989169",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "invalid_employee_id",
-        "missing_fields": [],
-        "details": "employee_id must start with EMP- or FG-AUTO-."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:38.044613",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "invalid_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "invalid_employee_id",
-          "missing_fields": [],
-          "details": "employee_id must start with EMP- or FG-AUTO-."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:38.083605",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: auto_recover",
-      "data": {
-        "issue_type": "invalid_employee_id",
-        "severity": "low",
-        "confidence": 0.88,
-        "policy_decision": "auto_recover",
-        "escalation_required": false,
-        "escalation_reason": "Invalid employee_id format can be corrected using fallback generation."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:38.133089",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced invalid employee ID with a valid generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: invalid_employee_id. Recovery action taken: Replaced invalid employee ID with a valid generated ID.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1002",
-          "documents_uploaded": [
-            "invalid_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:38.179428",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:05:38.231395",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1002",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.387504",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "aastha@example.com",
-        "employee_id": "EMP-1001",
-        "documents_uploaded": [
-          "duplicate_id.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail: aastha@example.com\nEmployee ID: EMP-1001\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.406164",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "duplicate_employee_id",
-        "missing_fields": [],
-        "details": "employee_id already exists in the simulated employee registry."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.457343",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "duplicate_employee_id",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "duplicate_employee_id",
-          "missing_fields": [],
-          "details": "employee_id already exists in the simulated employee registry."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.519696",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: recover_with_warning",
-      "data": {
-        "issue_type": "duplicate_employee_id",
-        "severity": "medium",
-        "confidence": 0.85,
-        "policy_decision": "recover_with_warning",
-        "escalation_required": false,
-        "escalation_reason": "Duplicate employee_id can be replaced with a new generated identifier."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.571330",
-      "agent": "Recovery Agent",
-      "step": "recovery",
-      "status": "success",
-      "message": "Recovery action executed successfully",
-      "data": {
-        "recovered": true,
-        "recovery_action": "Replaced duplicate employee ID with a new generated ID",
-        "recovery_explanation": "FlowGuard AI applied a deterministic fallback recovery path to keep the workflow moving safely when required data was missing. Issue detected: duplicate_employee_id. Recovery action taken: Replaced duplicate employee ID with a new generated ID.",
-        "warning": "Duplicate employee_id replaced with a new generated identifier.",
-        "updated_data": {
-          "candidate_name": "Aastha Singh",
-          "email": "aastha@example.com",
-          "employee_id": "FG-AUTO-1003",
-          "documents_uploaded": [
-            "duplicate_id.pdf"
-          ],
-          "document_status": "parsed"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.625811",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "success",
-      "message": "Verification completed successfully",
-      "data": {
-        "status": "success",
-        "message": "Verification passed"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:08.677080",
-      "agent": "Task Agent",
-      "step": "workflow_completion",
-      "status": "success",
-      "message": "Workflow completed successfully",
-      "data": {
-        "status": "completed",
-        "message": "Employee onboarding workflow completed successfully",
-        "final_employee_id": "FG-AUTO-1003",
-        "candidate_name": "Aastha Singh"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:29.987837",
-      "agent": "Document Agent",
-      "step": "document_extraction",
-      "status": "success",
-      "message": "Document parsed successfully",
-      "data": {
-        "candidate_name": "Aastha Singh",
-        "email": "",
-        "employee_id": "EMP-1023",
-        "documents_uploaded": [
-          "missing_email.pdf"
-        ],
-        "document_status": "parsed",
-        "raw_text_preview": "Candidate Name: Aastha Singh\nEmail:\nEmployee ID: EMP-1023\nDocument Status: Parsed\n"
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:30.002825",
-      "agent": "Verification Agent",
-      "step": "verification",
-      "status": "failed",
-      "message": "Verification failed due to workflow validation issues",
-      "data": {
-        "status": "failed",
-        "reason": "Validation failed",
-        "issue_type": "missing_email",
-        "missing_fields": [
-          "email"
-        ],
-        "details": "email is missing or empty."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:30.061597",
-      "agent": "Failure Detection Agent",
-      "step": "failure_detection",
-      "status": "failed",
-      "message": "Workflow failure detected",
-      "data": {
-        "failure_detected": true,
-        "failure_type": "missing_email",
-        "details": {
-          "status": "failed",
-          "reason": "Validation failed",
-          "issue_type": "missing_email",
-          "missing_fields": [
-            "email"
-          ],
-          "details": "email is missing or empty."
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:30.115549",
-      "agent": "Governance Agent",
-      "step": "governance_decision",
-      "status": "success",
-      "message": "Governance policy evaluated: escalate",
-      "data": {
-        "issue_type": "missing_email",
-        "severity": "medium",
-        "confidence": 0.81,
-        "policy_decision": "escalate",
-        "escalation_required": true,
-        "escalation_reason": "Email is mandatory and cannot be safely auto-generated."
-      }
-    },
-    {
-      "timestamp": "2026-03-27T02:06:30.168979",
+      "timestamp": "2026-03-28T01:34:47.540835",
       "agent": "Task Agent",
       "step": "workflow_completion",
       "status": "decision",

@@ -2,18 +2,16 @@ import html
 import json
 import re
 
-import requests
 import streamlit as st
 
+from workflow_service import (
+    get_audit_logs_data,
+    process_workflow_file,
+    reset_audit_logs_data,
+)
 
-BACKEND_URL = "http://127.0.0.1:8000"
-PROCESS_ENDPOINT = f"{BACKEND_URL}/process-workflow"
-LOGS_ENDPOINT = f"{BACKEND_URL}/logs"
-RESET_ENDPOINT = f"{BACKEND_URL}/reset"
+
 SUPPORTED_FILE_TYPES = ["pdf", "doc", "docx", "png", "jpg", "jpeg"]
-LOGS_TIMEOUT_SECONDS = 10
-RESET_TIMEOUT_SECONDS = 10
-PROCESS_TIMEOUT_SECONDS = 120
 
 RECOVERY_BANNER_MESSAGE = "Workflow recovered successfully through governance-aware recovery."
 ESCALATION_BANNER_MESSAGE = "High-risk issue detected. Workflow escalated for manual review."
@@ -127,12 +125,8 @@ def render_info_banner(message, variant="info"):
     render_status_banner("Workflow Update", message, colors.get(variant, "#2563eb"))
 
 
-def format_backend_error(action, exc):
-    if isinstance(exc, requests.Timeout):
-        return f"{action} timed out after waiting for the backend. Please try again in a moment or confirm the API is responding at {BACKEND_URL}."
-    if isinstance(exc, requests.ConnectionError):
-        return f"Couldn't reach the FlowGuard AI backend for {action.lower()}. Please start the FastAPI server at {BACKEND_URL} and try again."
-    return f"{action} failed because the backend returned an unexpected error: {exc}"
+def format_service_error(action, exc):
+    return f"{action} failed because FlowGuard AI encountered an unexpected error: {exc}"
 
 
 def format_percent(value):
@@ -253,32 +247,25 @@ def build_decision_explanation(data):
 
 def fetch_logs():
     try:
-        response = requests.get(LOGS_ENDPOINT, timeout=LOGS_TIMEOUT_SECONDS)
-        response.raise_for_status()
-        st.session_state.audit_logs = response.json().get("logs", [])
+        st.session_state.audit_logs = get_audit_logs_data().get("logs", [])
         st.session_state.backend_status_message = None
-    except requests.RequestException as exc:
+    except Exception as exc:
         st.session_state.audit_logs = []
-        st.session_state.backend_status_message = format_backend_error("Loading audit logs", exc)
+        st.session_state.backend_status_message = format_service_error("Loading audit logs", exc)
 
 
 def process_workflow(uploaded_file):
-    files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type or "application/octet-stream")}
     try:
-        response = requests.post(PROCESS_ENDPOINT, files=files, timeout=PROCESS_TIMEOUT_SECONDS)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as exc:
-        raise RuntimeError(format_backend_error("Workflow processing", exc)) from exc
+        return process_workflow_file(uploaded_file)
+    except Exception as exc:
+        raise RuntimeError(format_service_error("Workflow processing", exc)) from exc
 
 
 def reset_workflow():
     try:
-        response = requests.post(RESET_ENDPOINT, timeout=RESET_TIMEOUT_SECONDS)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as exc:
-        raise RuntimeError(format_backend_error("Resetting workflow logs", exc)) from exc
+        return reset_audit_logs_data()
+    except Exception as exc:
+        raise RuntimeError(format_service_error("Resetting workflow logs", exc)) from exc
 
 
 def render_overview(data):
