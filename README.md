@@ -184,10 +184,6 @@ Try:
 - Cost savings for enterprises
 - Full transparency and traceability
 
-## Why This Project Stands Out
+## Author 
+Aastha Singh
 
-FlowGuard AI is not just automation - it is:
-
-- Decision Intelligence System
-- Self-healing Workflow Engine
-- Governance-aware AI System
