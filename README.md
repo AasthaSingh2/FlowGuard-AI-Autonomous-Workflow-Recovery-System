@@ -2,6 +2,19 @@
 
 FlowGuard AI is a hackathon-ready intelligent workflow reliability platform designed to detect failures, trigger automated recovery actions, and complete enterprise workflows with audit visibility. The current demo showcases how agentic AI can reduce manual intervention in employee onboarding by identifying missing data, recovering the workflow, and producing a final verified outcome.
 
+## Live Demo
+
+You can try the application here:
+
+👉 https://flowguard-ai.streamlit.app/
+
+Upload sample workflow documents and observe:
+
+- Failure detection
+- Governance decision
+- Autonomous recovery
+- Audit trail generation
+
 ## Problem Statement
 
 Enterprise workflows often break because of incomplete documents, missing fields, or manual handoff delays. In high-volume operations such as HR onboarding, even a small data gap can stall downstream tasks, increase turnaround time, and create extra work for operations teams.
