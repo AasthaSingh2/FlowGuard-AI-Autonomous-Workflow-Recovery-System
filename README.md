@@ -127,10 +127,6 @@ Every step is logged for full traceability and accountability:
 [6] Workflow Completed -> Success
 ```
 
-<img width="1700" height="600" alt="image" src="https://github.com/user-attachments/assets/b7cc41e8-1d61-4fe0-b9aa-f785c8d3ca17" />
-<img width="1700" height="600" alt="image" src="https://github.com/user-attachments/assets/dff32f4b-93b2-4b3d-92c3-0327d98bb92f" />
-
-
 ## Key Features
 
 - Multi-agent workflow orchestration
@@ -172,6 +168,22 @@ Try:
 - Duplicate ID -> governed recovery
 - Missing email -> escalation
 - Identity mismatch -> high-risk escalation
+
+
+## 📸 Demo Preview
+### 🔹 Upload & Start Workflow
+<img width="1523" height="795" alt="image" src="https://github.com/user-attachments/assets/328d0c1a-892d-479c-8ebc-4221972fdd42" />
+
+### 🔹 Autonomous Recovery (Duplicate ID)
+<img width="1677" height="658" alt="image" src="https://github.com/user-attachments/assets/a883634e-1669-4ae0-8ed9-fbb7a0667dd2" />
+
+### 🔹 Intelligent Escalation (High Risk)
+<img width="1730" height="634" alt="image" src="https://github.com/user-attachments/assets/aced82d4-8e96-45a1-98aa-a2881c23b824" /> <img width="1526" height="687" alt="image" src="https://github.com/user-attachments/assets/26ee010b-2806-4360-a25e-fa213213e54b" />
+
+### 🔹 Audit Trail & Explainability
+<img width="1547" height="764" alt="image" src="https://github.com/user-attachments/assets/ef0fbe3a-c517-4fb2-9e02-a635784dee14" /> <img width="1495" height="695" alt="image" src="https://github.com/user-attachments/assets/491a1a6b-7e87-43a7-84fc-bf84d600a610" />
+<img width="1451" height="674" alt="image" src="https://github.com/user-attachments/assets/ec8e6887-6e60-40cf-8a57-12842194cb9c" /> <img width="1516" height="773" alt="image" src="https://github.com/user-attachments/assets/58a9d495-c5b8-4d10-a18a-904b218a4d35" />
+
 
 ## Impact
 
