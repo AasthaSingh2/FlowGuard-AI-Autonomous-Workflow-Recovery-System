@@ -2,14 +2,6 @@
 
 
 
-## Live Demo
-
-https://flowguard-ai.streamlit.app/
-
-## GitHub Repo
-
-https://github.com/AasthaSingh2/FlowGuard-AI-Autonomous-Workflow-Recovery-System
-
 ## Problem Statement
 
 Enterprise workflows often fail due to:
