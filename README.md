@@ -1,6 +1,6 @@
 # FlowGuard AI - Autonomous Workflow Recovery System
 
-**Author:** Aastha Singh
+
 
 ## Live Demo
 
