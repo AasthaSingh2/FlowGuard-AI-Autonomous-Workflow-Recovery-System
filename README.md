@@ -127,6 +127,10 @@ Every step is logged for full traceability and accountability:
 [6] Workflow Completed -> Success
 ```
 
+<img width="1749" height="715" alt="image" src="https://github.com/user-attachments/assets/b7cc41e8-1d61-4fe0-b9aa-f785c8d3ca17" />
+<img width="1762" height="691" alt="image" src="https://github.com/user-attachments/assets/dff32f4b-93b2-4b3d-92c3-0327d98bb92f" />
+
+
 ## Key Features
 
 - Multi-agent workflow orchestration
