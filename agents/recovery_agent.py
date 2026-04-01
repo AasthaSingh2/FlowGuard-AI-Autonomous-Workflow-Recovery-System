@@ -53,13 +53,26 @@ def _generate_llm_explanation(data: dict, failure_info: dict, recovery_action: s
     return (payload.get("output_text") or "").strip() or None
 
 
+def auto_fix(data: dict):
+    final_data = data.copy()
+    employee_id = str(final_data.get("employee_id", "") or "").strip()
+
+    if employee_id and not employee_id.startswith("EMP-"):
+        final_data["employee_id"] = f"EMP-{employee_id}"
+        return final_data, "Normalized employee ID format to the approved EMP- pattern"
+
+    return final_data, "No automated recovery action applied"
+
+
 def recovery_agent(data: dict, failure_info: dict):
     governance_result = failure_info.get("governance_result", {})
-    policy_decision = governance_result.get("policy_decision", "no_action")
     issue_type = failure_info.get("details", {}).get("issue_type")
+    risk_level = governance_result.get("risk_level", "MEDIUM")
+    field_name = governance_result.get("field_name")
 
     if not failure_info.get("failure_detected"):
         recovery_result = {
+            "status": "NOT_REQUIRED",
             "recovered": False,
             "recovery_action": "No recovery needed",
             "recovery_explanation": "Workflow completed without recovery.",
@@ -81,10 +94,18 @@ def recovery_agent(data: dict, failure_info: dict):
             "recovery_result": recovery_result,
         }
 
-    if policy_decision == "escalate" or issue_type in {"missing_email", "identity_mismatch"}:
+    if risk_level == "HIGH":
+        reason = (
+            "Employee ID is a critical identity field and cannot be auto-generated."
+            if field_name == "employee_id"
+            else f"{field_name or 'This field'} is critical and requires human verification."
+        )
         recovery_result = {
+            "status": "ESCALATED",
             "recovered": False,
-            "recovery_action": "Escalated instead of recovered",
+            "recovery_action": "Escalated",
+            "message": "Critical field missing. Requires human verification.",
+            "reason": reason,
             "recovery_explanation": "Issue required human review due to governance policy.",
         }
 
@@ -104,20 +125,32 @@ def recovery_agent(data: dict, failure_info: dict):
             "recovery_result": recovery_result,
         }
 
-    final_data = data.copy()
+    if risk_level == "MEDIUM":
+        recovery_result = {
+            "status": "REVIEW_REQUIRED",
+            "recovered": False,
+            "recovery_action": "Review required",
+            "message": "Suggested fix available but needs approval.",
+            "recovery_explanation": "Workflow paused for human approval before any fix is applied.",
+        }
 
-    if issue_type == "missing_employee_id":
-        final_data["employee_id"] = "FG-AUTO-1001"
-        recovery_action = "Auto-generated missing employee ID"
-    elif issue_type == "invalid_employee_id":
-        final_data["employee_id"] = "FG-AUTO-1002"
-        recovery_action = "Replaced invalid employee ID with a valid generated ID"
-    elif issue_type == "duplicate_employee_id":
-        final_data["employee_id"] = "FG-AUTO-1003"
-        recovery_action = "Replaced duplicate employee ID with a new generated ID"
-    else:
-        recovery_action = "No automated recovery action applied"
+        log_event(
+            agent_name="Recovery Agent",
+            step="recovery",
+            status="pending_review",
+            message="Recovery requires human approval before changes can be applied",
+            data={
+                **recovery_result,
+                "updated_data": data.copy(),
+            },
+        )
 
+        return {
+            "final_data": data.copy(),
+            "recovery_result": recovery_result,
+        }
+
+    final_data, recovery_action = auto_fix(data)
     recovery_explanation = _generate_default_explanation(issue_type or "workflow_issue", recovery_action)
 
     try:
@@ -139,13 +172,11 @@ def recovery_agent(data: dict, failure_info: dict):
         )
 
     recovery_result = {
+        "status": "AUTO_FIXED",
         "recovered": True,
         "recovery_action": recovery_action,
         "recovery_explanation": recovery_explanation,
     }
-
-    if issue_type == "duplicate_employee_id":
-        recovery_result["warning"] = "Duplicate employee_id replaced with a new generated identifier."
 
     log_event(
         agent_name="Recovery Agent",

@@ -69,15 +69,15 @@ Audit Agent -> Log Every Step
 
 ### 1. Missing Employee ID
 
-- Issue detected
-- System generates a new ID
-- Workflow recovered automatically
+- Critical identity field missing
+- Governance blocks unsafe auto-recovery
+- Workflow escalated for review
 
 ### 2. Duplicate Employee ID
 
 - Duplicate detected
-- New ID generated
-- Recovery applied with warning
+- Auto-replacement blocked for trust and identity integrity
+- Workflow routed for review
 
 ### 3. Missing Email
 
@@ -101,6 +101,7 @@ Audit Agent -> Log Every Step
 Core logic:
 
 - IF risk = high -> Escalate
+- IF risk = medium -> Review required before any fix
 - IF issue is safe to fix -> Recover
 - IF no issue -> Complete workflow
 
@@ -122,9 +123,9 @@ Every step is logged for full traceability and accountability:
 [1] Document Uploaded -> Success
 [2] Data Extracted -> Success
 [3] Verification -> Failed (Duplicate ID)
-[4] Governance Decision -> Recover
-[5] Recovery Applied -> New ID Generated
-[6] Workflow Completed -> Success
+[4] Governance Decision -> Review / Escalate
+[5] Recovery Blocked -> Human Approval Required
+[6] Workflow Completed -> Manual Review
 ```
 
 ## Key Features
@@ -164,9 +165,9 @@ https://flowguard-ai.streamlit.app/
 
 Try:
 
-- Missing employee ID -> auto recovery
-- Duplicate ID -> governed recovery
-- Missing email -> escalation
+- Missing employee ID -> escalation
+- Duplicate ID -> review required
+- Missing email -> review required
 - Identity mismatch -> high-risk escalation
 
 

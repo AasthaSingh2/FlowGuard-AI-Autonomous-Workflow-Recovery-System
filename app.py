@@ -148,7 +148,7 @@ def format_title_case(value):
 def format_policy_decision(policy_decision):
     mapping = {
         "auto_recover": "Auto Recover",
-        "recover_with_warning": "Recover With Warning",
+        "review_required": "Review Required",
         "escalate": "Escalate",
         "no_action": "No Action",
     }
@@ -172,13 +172,15 @@ def get_issue_type(data):
 
 def get_explanation_text(issue_type, escalated):
     if issue_type == "missing_employee_id":
-        return "FlowGuard AI identified a recoverable missing employee ID, generated a compliant replacement value, and completed the workflow successfully."
+        return "FlowGuard AI identified that employee_id is a critical identity field, blocked auto-recovery, and escalated the workflow for human verification."
     if issue_type == "duplicate_employee_id":
-        return "FlowGuard AI detected a duplicate employee ID, generated a replacement identifier under governance policy, and completed the workflow with warning-aware recovery."
+        return "FlowGuard AI detected a duplicate employee ID and routed the workflow for review instead of inventing a replacement identity value."
     if issue_type == "missing_email":
         return "FlowGuard AI identified missing critical contact data and escalated the workflow for manual review because safe autonomous recovery was not allowed."
     if issue_type == "identity_mismatch":
         return "FlowGuard AI identified a high-risk identity mismatch, stopped autonomous recovery, and routed the workflow for manual review based on governance policy."
+    if issue_type == "invalid_employee_id":
+        return "FlowGuard AI identified an employee ID format error and only permits auto-correction when the issue is low risk."
     if escalated:
         return "FlowGuard AI identified missing critical contact data and escalated the workflow for manual review because safe autonomous recovery was not allowed."
     return "FlowGuard AI identified a recoverable workflow issue, applied governance-aware recovery, and completed the workflow successfully."
@@ -537,7 +539,7 @@ def get_timeline_action(log, ui_state):
         return "Escalation Decision" if ui_state["escalated"] else "Recovery Decision"
     if step == "recovery":
         if issue_type in {"missing_employee_id", "duplicate_employee_id", "invalid_employee_id"}:
-            return "ID Replacement"
+            return "ID Policy Enforcement"
         return "Automated Recovery"
     if step == "workflow_completion":
         return "Manual Review" if ui_state["escalated"] else "Completed"

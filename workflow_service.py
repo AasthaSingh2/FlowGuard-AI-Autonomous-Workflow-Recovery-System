@@ -79,30 +79,22 @@ def process_workflow_file(uploaded_file: Any) -> dict:
     }
 
     if failure_result.get("failure_detected"):
-        policy_decision = governance_result.get("policy_decision")
+        recovery_output = recovery_agent(
+            extracted_data,
+            {
+                **failure_result,
+                "details": initial_verification,
+                "governance_result": governance_result,
+            },
+        )
+        final_data = recovery_output.get("final_data", extracted_data.copy())
+        recovery_result = recovery_output.get("recovery_result", recovery_result)
 
-        if policy_decision in {"auto_recover", "recover_with_warning"}:
-            recovery_output = recovery_agent(
-                extracted_data,
-                {
-                    **failure_result,
-                    "details": initial_verification,
-                    "governance_result": governance_result,
-                },
-            )
-            final_data = recovery_output.get("final_data", extracted_data.copy())
-            recovery_result = recovery_output.get("recovery_result", recovery_result)
+        if recovery_result.get("status") == "AUTO_FIXED":
             final_verification = verification_agent(final_data)
             workflow_result = task_agent(final_data)
-        elif policy_decision == "escalate":
-            recovery_result = {
-                "recovered": False,
-                "recovery_action": "Escalated instead of recovered",
-                "recovery_explanation": "Issue required human review due to governance policy.",
-            }
-            workflow_result = _build_escalated_workflow_result(extracted_data)
         else:
-            workflow_result = task_agent(final_data)
+            workflow_result = _build_escalated_workflow_result(extracted_data)
     else:
         workflow_result = task_agent(final_data)
 

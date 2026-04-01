@@ -2,7 +2,7 @@
 
 ## System Overview
 
-FlowGuard AI is an agent-based workflow resilience system built to detect process failures, recover from them automatically, and complete business workflows with audit visibility. The platform combines a Streamlit frontend for interactive demo and operator visibility with a FastAPI backend that orchestrates a sequence of specialized agents.
+FlowGuard AI is an agent-based workflow resilience system built to detect process failures, recover low-risk issues automatically, and escalate identity-sensitive workflows with audit visibility. The platform combines a Streamlit frontend for interactive demo and operator visibility with a FastAPI backend that orchestrates a sequence of specialized agents.
 
 The current implementation focuses on employee onboarding as a representative enterprise workflow. A document is uploaded, converted into structured onboarding data, validated against required fields, checked for failure conditions, and recovered if needed before the workflow is completed.
 
@@ -84,7 +84,7 @@ The `Recovery Agent` performs automated remediation when a failure is detected. 
 - optional LLM-generated explanation
 - fail-safe execution even when OpenAI is unavailable
 
-In the current onboarding demo, if `employee_id` is missing, the recovery agent auto-generates a temporary ID. It also returns recovery metadata including:
+In the current onboarding demo, the recovery agent only auto-fixes low-risk formatting issues. Critical identity fields such as `employee_id` cannot be auto-generated and are escalated for human verification. It returns recovery metadata including:
 
 - `recovered`
 - `recovery_action`
@@ -118,9 +118,9 @@ The current workflow runs in the following sequence:
 2. The `Document Agent` extracts structured onboarding data.
 3. The `Verification Agent` checks required fields.
 4. The `Failure Detection Agent` decides whether a workflow issue exists.
-5. If a failure is detected, the `Recovery Agent` applies fallback remediation.
-6. The updated data is re-verified by the `Verification Agent`.
-7. The `Task Agent` completes the business workflow.
+5. If a failure is detected, the `Recovery Agent` evaluates whether the issue can be auto-fixed, requires approval, or must be escalated.
+6. Auto-fixed data is re-verified by the `Verification Agent`.
+7. The `Task Agent` completes the business workflow only when policy allows.
 8. The final workflow state and audit logs are returned to the frontend and saved locally.
 
 This creates a closed-loop flow in which the system does not only detect a problem, but also attempts recovery before completing the process.
@@ -146,11 +146,11 @@ The recovery layer is intentionally dual-mode:
 - deterministic recovery for reliability
 - LLM-generated explanation for interpretability
 
-Deterministic fallback ensures the workflow can continue safely in a hackathon or enterprise prototype setting. The optional LLM explanation improves transparency for operators, reviewers, or auditors without making the workflow dependent on model availability.
+Deterministic fallback ensures only low-risk issues are corrected automatically. The optional LLM explanation improves transparency for operators, reviewers, or auditors without making the workflow dependent on model availability.
 
 This makes the recovery subsystem resilient by design:
 
-- the fallback logic always works locally
+- the fallback logic always works locally for low-risk issues
 - the explanation layer is additive, not critical-path
 - try/except prevents LLM failure from breaking the workflow
 

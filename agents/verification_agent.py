@@ -43,11 +43,9 @@ def verification_agent(data: dict):
         if candidate_name and email and first_name and first_name not in email_prefix:
             issue_type = "identity_mismatch"
             details = "candidate_name does not match the email prefix."
-        elif employee_id and not (
-            employee_id.startswith("EMP-") or employee_id.startswith("FG-AUTO-")
-        ):
+        elif employee_id and not employee_id.startswith("EMP-"):
             issue_type = "invalid_employee_id"
-            details = "employee_id must start with EMP- or FG-AUTO-."
+            details = "employee_id must start with EMP-."
         elif employee_id in EXISTING_EMPLOYEE_IDS:
             issue_type = "duplicate_employee_id"
             details = "employee_id already exists in the simulated employee registry."
@@ -57,8 +55,10 @@ def verification_agent(data: dict):
             "status": "failed",
             "reason": "Validation failed",
             "issue_type": issue_type,
+            "field_name": "employee_id" if "employee_id" in issue_type or issue_type == "identity_mismatch" else "email",
             "missing_fields": missing_fields,
             "details": details,
+            "data": data.copy(),
         }
 
         log_event(
